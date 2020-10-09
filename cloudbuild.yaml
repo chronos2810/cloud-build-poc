@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args: ['gcloud', 'builds', 'submit', '--tag', 'gcr.io/cloud-build-poc-rcksju/helloworld:1.0.0', '.']
+  timeout: 500s
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args: ['gcloud', 'run', 'deploy', '--image', 'gcr.io/cloud-build-poc-rcksju/helloworld', '--platform', 'managed']
+  timeout: 500s

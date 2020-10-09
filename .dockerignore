@@ -7,3 +7,4 @@ __pycache__
 .pytest_cacheproject-creation
 .git
 project-creation
+cloudbuild.yaml
