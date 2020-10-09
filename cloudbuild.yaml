@@ -5,4 +5,4 @@ steps:
   timeout: 500s
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'helloworld', '--image', 'gcr.io/cloud-build-poc-rcksju/helloworld', '--platform', 'managed']
+  args: ['run', 'deploy', 'helloworld', '--image', 'gcr.io/cloud-build-poc-rcksju/helloworld', '--region', 'us-central1', '--platform', 'managed']
