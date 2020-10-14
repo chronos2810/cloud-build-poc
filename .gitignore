@@ -2,3 +2,4 @@ cloud-build.sublime-project
 cloud-build.sublime-workspace
 project-creation/terraform.tfstate
 project-creation/terraform.tfstate.backup
+project-creation/.terraform
