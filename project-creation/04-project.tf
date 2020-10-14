@@ -21,9 +21,9 @@ resource "google_project" "demo_project" {
 
 # Enable services in newly created GCP Project.
 resource "google_project_service" "gcp_services" {
-  count   = length(var.gcp_service_list)
+  for_each = toset(var.gcp_service_list)
   project = google_project.demo_project.project_id
-  service = var.gcp_service_list[count.index]
+  service = each.value
 
   disable_dependent_services = true
 }
