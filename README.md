@@ -84,7 +84,7 @@ sed -i "s/PROJECT_ID/$PROJECT_ID/" cloudbuild.yaml
 export NAME="my-github-trigger"
 export REPO_OWNER="cronos2810"
 export REPO_NAME="cloud-build-poc"
-export BUILD_CONFIG="cloudbuild.yaml"
+export BUILD_CONFIG="app/cloudbuild.yaml"
 
 # Creating the trigger using the gcloud and the master branch
 gcloud beta builds triggers create github \
