@@ -1,7 +1,7 @@
 steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['builds', 'submit', '--tag', 'gcr.io/cloud-build-poc-w65npi/helloworld:latest', '.']
+  args: ['builds', 'submit', '--tag', 'gcr.io/cloud-build-poc-w65npi/helloworld:latest', '/app']
   timeout: 500s
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
