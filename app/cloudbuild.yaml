@@ -1,0 +1,8 @@
+steps:
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['builds', 'submit', '--tag', 'gcr.io/cloud-build-poc-w65npi/helloworld:latest', '.']
+  timeout: 500s
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'hello-world', '--image', 'gcr.io/cloud-build-poc-w65npi/helloworld', '--region', 'us-central1', '--platform', 'managed']
