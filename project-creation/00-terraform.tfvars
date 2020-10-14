@@ -4,6 +4,6 @@ labels = {
   "environment" = "test"
 }
 gcp_service_list = [
-  "cloudbuild.googleapis.com"
+  "cloudbuild.googleapis.com",
   "run.googleapis.com"
 ]

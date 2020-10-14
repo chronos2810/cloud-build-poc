@@ -10,6 +10,7 @@
 - [Creating Cloud Build Triggers](#creating-cloud-build-triggers)
 - [Setting Permissions](#setting-permissions)
 - [Testing the trigger](#testing-the-trigger)
+- [Cleaning up](#cleaning-up)
 
 <!-- /MarkdownTOC -->
 
@@ -120,11 +121,35 @@ Now we've created and configured a trigger that will build our image and deploy 
 
 ```bash
 # Making the change
-sed -i "s/World/W0rld\!\!\!\!/" main.py
+sed -i "s/World/W0rld\!/" main.py
 
 # Add, commit and push
 git add .
-git commit -m "Changed World -> W0rld\!\!\!\! in main.py"
+git commit -m "Changed World -> W0rld\! in main.py"
 git push origin master
+
+# Re-check
+gcloud run services list --platform managed
 ```
+
+![build](static/images/build.jpg)
+
+Great! We can also check the trigger execution logs for more details: 
+
+![steps](static/images/steps.jpg)
+
+## Cleaning up
+
+```bash
+# Delete the Cloud Run service, type "y" when prompted
+gcloud run services delete hello-world --platform managed
+
+# Change the working directory
+cd ../project-creation
+
+# Delete the project
+terraform destroy -var-file 00-terraform.tfvars -auto-approve
+```
+
+    EOF
 
