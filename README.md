@@ -7,8 +7,8 @@
 - [Prerequisites](#prerequisites)
 - [Preparing the environment](#preparing-the-environment)
 - [Creating a Sample App](#creating-a-sample-app)
-- [Connecting our Github Repository to Cloud Source Repositories](#connecting-our-github-repository-to-cloud-source-repositories)
 - [Creating Cloud Build Triggers](#creating-cloud-build-triggers)
+- [Setting Permissions](#setting-permissions)
 - [Testing the trigger](#testing-the-trigger)
 
 <!-- /MarkdownTOC -->
@@ -72,30 +72,9 @@ We can test the app navigating to the URL displayed after using the command `gcl
 
 Congratulations! We've successfully deployed a Cloud Run App using Cloud Build, next we are going to be learning how to use triggers to automatically deploy new versions of the Application using Cloud Build as CI/CD tool. 
 
-## Connecting our Github Repository to Cloud Source Repositories
-
-REF: https://cloud.google.com/cloud-build/docs/automating-builds/create-manage-triggers#gcloud
-
-Now we need to mirror our Github Repository to GCP Cloud Source Repositories in order to use it with Build Triggers:
-
-**1.** Open the Triggers page in the Google Cloud Console.
-
-- [Open the triggers page](https://console.cloud.google.com/cloud-build/triggers?_ga=2.81884566.1637700177.1602688157-871824636.1602688157)
-
-**2.** Select your project and click Open.  
-**3.** Click Connect Repository.  
-**4.** Select the repository where you've stored your source code.  
-If you select GitHub (mirrored) or Bitbucket (mirrored) as your source repository, Cloud Build mirrors your repository in Cloud Source Repositories and uses the mirrored repository for all its operations.  
-**5.** Click Continue.  
-**6.** Authenticate to your source repository with your username and password.  
-**7.** From the list of available repositories, select the desired repository, then click Connect repository.  
-For external repositories, such as GitHub and Bitbucket, you must have owner-level permissions for the Cloud project with which you're working.  
-**7.b.** If you see the message "The GitHub App is not installed on any of your repositories" you'll need to install it in your desired Repository using "Install Google Cloud Build"
-**8.** Click "Connect Repository", once your repository it's connected click "Skip for now" in the Triggers section
-
 ## Creating Cloud Build Triggers
 
-Now we are going to be creating our Cloud Build Trigger with using gcloud and environment variables: 
+Now we are going to be creating a push trigger using gcloud and environment variables for customization: 
 
 ```bash
 # Setting our PROJECT_ID in the cloudbuild.yaml file
@@ -112,9 +91,40 @@ gcloud beta builds triggers create github \
   --name=${NAME} \
   --repo-owner=${REPO_OWNER} \
   --repo-name=${REPO_NAME} \
-  --pull-request-pattern="^master$" \
+  --branch-pattern="^master$" \
   --build-config=${BUILD_CONFIG}
 ```
 
+## Setting Permissions
+
+We need to setup some permissions before testing:
+
+1. Set to "ENABLED" the following permissions on Cloud Build Settings, click on "Grant access to all service accounts" when Prompted, you can change this setting later if needed.
+
+```text
+Cloud Run           Cloud Run Admin
+Service Accounts    Service Account User
+```
+
+![perm](static/images/perm.jpg)
+
 ## Testing the trigger
+
+Now we've created and configured a trigger that will build our image and deploy the new version of the app every time that we do a "push" to the Github repository, lets test! 
+
+`gcloud run services list --platform managed`
+
+![app-test](static/images/app-test.jpg)
+
+- Lets make a change to our app:
+
+```bash
+# Making the change
+sed -i "s/World/W0rld\!\!\!\!/" main.py
+
+# Add, commit and push
+git add .
+git commit -m "Changed World -> W0rld\!\!\!\! in main.py"
+git push origin master
+```
 
