@@ -151,5 +151,5 @@ cd ../project-creation
 terraform destroy -var-file 00-terraform.tfvars -auto-approve
 ```
 
-    EOF
+	EOF
 
